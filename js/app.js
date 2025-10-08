@@ -1,20 +1,107 @@
-class ClickerGame {
+class MineyFriendsGame {
     constructor() {
-        this.tg = new TelegramIntegration();
-        this.coins = 200; // Теперь только одни монеты
+        this.isTelegram = false;
+        this.tg = null;
+        this.coins = 200;
         this.limit = 5600;
         this.currentLimit = 262;
         this.recoveryRate = 50;
         this.recoveryInterval = null;
         
-        this.initializeElements();
-        this.bindEvents();
-        this.initGame();
+        this.init();
+    }
+
+    async init() {
+        try {
+            // Сначала инициализируем Telegram
+            await this.initTelegram();
+            
+            // Затем инициализируем элементы и события
+            this.initializeElements();
+            this.bindEvents();
+            
+            // Запускаем игру
+            this.startGame();
+            
+        } catch (error) {
+            console.error('Error initializing game:', error);
+            this.handleInitError();
+        }
+    }
+
+    async initTelegram() {
+        return new Promise((resolve) => {
+            // Проверяем, находимся ли мы в Telegram
+            if (window.Telegram && window.Telegram.WebApp) {
+                this.tg = window.Telegram.WebApp;
+                this.isTelegram = true;
+                console.log('Running in Telegram Web App');
+                
+                // Ждем готовности Telegram Web App
+                if (this.tg.isReady) {
+                    this.setupTelegram();
+                    resolve();
+                } else {
+                    this.tg.ready(() => {
+                        this.setupTelegram();
+                        resolve();
+                    });
+                }
+            } else {
+                console.log('Running in standalone mode');
+                this.isTelegram = false;
+                resolve();
+            }
+        });
+    }
+
+    setupTelegram() {
+        if (!this.isTelegram) return;
+
+        try {
+            // Расширяем на весь экран
+            this.tg.expand();
+            
+            // Включаем подтверждение закрытия
+            this.tg.enableClosingConfirmation();
+            
+            // Устанавливаем цвета
+            this.tg.setHeaderColor('#1a1a2e');
+            this.tg.setBackgroundColor('#1a1a2e');
+            
+            // Применяем тему Telegram
+            this.applyTelegramTheme();
+            
+            // Слушаем изменения темы
+            this.tg.onEvent('themeChanged', () => {
+                this.applyTelegramTheme();
+            });
+            
+            console.log('Telegram Web App initialized successfully');
+            
+        } catch (error) {
+            console.error('Error setting up Telegram:', error);
+        }
+    }
+
+    applyTelegramTheme() {
+        if (!this.isTelegram || !this.tg.themeParams) return;
+
+        const theme = this.tg.themeParams;
+        
+        // Применяем цвета темы Telegram
+        document.documentElement.style.setProperty('--tg-bg-color', theme.bg_color || '#1a1a2e');
+        document.documentElement.style.setProperty('--tg-text-color', theme.text_color || '#ffffff');
+        document.documentElement.style.setProperty('--tg-button-color', theme.button_color || '#4cc9f0');
+        
+        // Обновляем фон
+        document.body.style.background = theme.bg_color || 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
     }
 
     initializeElements() {
         this.loadingScreen = document.getElementById('loadingScreen');
         this.gameScreen = document.getElementById('gameScreen');
+        this.loadingText = document.getElementById('loadingText');
         this.clickImage = document.getElementById('clickImage');
         this.coinsCount = document.getElementById('coinsCount');
         this.currentLimitDisplay = document.getElementById('currentLimit');
@@ -26,20 +113,26 @@ class ClickerGame {
     }
 
     bindEvents() {
+        // Клики по картинке
         this.clickImage.addEventListener('click', (e) => this.handleClick(e));
-        this.clickImage.addEventListener('touchstart', (e) => this.handleClick(e));
-        
+        this.clickImage.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.handleClick(e);
+        }, { passive: false });
+
+        // Навигация
         this.navButtons.forEach(btn => {
             btn.addEventListener('click', (e) => this.handleNavigation(e));
         });
 
         // Проверяем загрузку картинки
-        this.checkImageLoad();
+        this.setupImageHandling();
         
+        // Свайп-навигация
         this.setupSwipeNavigation();
     }
 
-    checkImageLoad() {
+    setupImageHandling() {
         this.clickImage.onerror = () => {
             console.log('Image failed to load, using fallback');
             this.imageContainer.classList.add('fallback');
@@ -49,20 +142,30 @@ class ClickerGame {
             console.log('Image loaded successfully');
             this.imageContainer.classList.remove('fallback');
         };
+        
+        // Принудительно запускаем проверку
+        if (this.clickImage.complete) {
+            this.clickImage.onload();
+        }
     }
 
     setupSwipeNavigation() {
         let startX = 0;
+        let startY = 0;
         
         document.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
         });
 
         document.addEventListener('touchend', (e) => {
             const endX = e.changedTouches[0].clientX;
+            const endY = e.changedTouches[0].clientY;
             const diffX = startX - endX;
+            const diffY = startY - endY;
 
-            if (Math.abs(diffX) > 50) {
+            // Проверяем, что это горизонтальный свайп (не вертикальный)
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
                 if (diffX > 0) {
                     this.switchToPage('shop');
                 } else {
@@ -72,47 +175,70 @@ class ClickerGame {
         });
     }
 
-    switchToPage(page) {
-        this.navButtons.forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.dataset.page === page) {
-                btn.classList.add('active');
-            }
-        });
-        console.log('Switched to page:', page);
-    }
-
-    initGame() {
+    startGame() {
+        this.updateLoadingText('Загрузка данных...');
+        
+        // Загружаем сохраненные данные
         this.loadGameData();
         
+        // Обновляем текст загрузки
+        this.updateLoadingText('Запуск игры...');
+        
+        // Имитируем загрузку (можно убрать в продакшене)
         setTimeout(() => {
             this.hideLoadingScreen();
             this.updateDisplay();
-        }, 1500);
+            
+            // Сохраняем данные каждые 30 секунд
+            setInterval(() => this.saveGameData(), 30000);
+            
+        }, 1000);
     }
 
-    loadGameData() {
-        const savedData = localStorage.getItem('miney_friends_save');
-        if (savedData) {
-            const data = JSON.parse(savedData);
-            this.coins = data.coins || 200;
-            this.currentLimit = data.currentLimit || 262;
+    updateLoadingText(text) {
+        if (this.loadingText) {
+            this.loadingText.textContent = text;
         }
     }
 
-    saveGameData() {
-        const data = {
-            coins: this.coins,
-            currentLimit: this.currentLimit,
-            timestamp: Date.now()
-        };
-        localStorage.setItem('miney_friends_save', JSON.stringify(data));
+    hideLoadingScreen() {
+        if (!this.loadingScreen) return;
         
-        this.tg.sendDataToBot({
-            type: 'game_save',
-            data: data
-        });
+        this.loadingScreen.style.opacity = '0';
+        
+        setTimeout(() => {
+            this.loadingScreen.style.display = 'none';
+            this.gameScreen.style.display = 'flex';
+            
+            // Небольшая задержка для плавного появления
+            setTimeout(() => {
+                this.gameScreen.style.opacity = '1';
+            }, 50);
+        }, 500);
     }
+
+    handleInitError() {
+        this.updateLoadingText('Ошибка загрузки. Обновите страницу.');
+        
+        // Показываем кнопку перезагрузки через 3 секунды
+        setTimeout(() => {
+            const reloadBtn = document.createElement('button');
+            reloadBtn.textContent = 'Перезагрузить';
+            reloadBtn.style.marginTop = '20px';
+            reloadBtn.style.padding = '10px 20px';
+            reloadBtn.style.background = '#4cc9f0';
+            reloadBtn.style.color = 'white';
+            reloadBtn.style.border = 'none';
+            reloadBtn.style.borderRadius = '10px';
+            reloadBtn.style.cursor = 'pointer';
+            reloadBtn.onclick = () => window.location.reload();
+            
+            this.loadingContent.appendChild(reloadBtn);
+        }, 3000);
+    }
+
+    // ... остальные методы (handleClick, createClickEffect, updateDisplay, etc.) остаются без изменений
+    // Копируем их из предыдущей версии:
 
     handleClick(event) {
         if (this.currentLimit <= 0) {
@@ -131,7 +257,6 @@ class ClickerGame {
             this.startLimitRecovery();
         }
         
-        // Предотвращаем выделение текста на мобильных
         event.preventDefault();
     }
 
@@ -141,11 +266,11 @@ class ClickerGame {
         effect.textContent = '+1';
         
         const rect = this.clickImage.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        const x = event.clientX || (event.touches && event.touches[0].clientX) || rect.width / 2;
+        const y = event.clientY || (event.touches && event.touches[0].clientY) || rect.height / 2;
         
-        effect.style.left = x + 'px';
-        effect.style.top = y + 'px';
+        effect.style.left = (x - rect.left) + 'px';
+        effect.style.top = (y - rect.top) + 'px';
         
         const randomX = (Math.random() - 0.5) * 50;
         effect.style.transform = `translate(${randomX}px, 0)`;
@@ -220,24 +345,57 @@ class ClickerGame {
         }, 1500);
     }
 
-    handleNavigation(event) {
-        const targetPage = event.currentTarget.dataset.page;
-        
+    switchToPage(page) {
         this.navButtons.forEach(btn => {
             btn.classList.remove('active');
+            if (btn.dataset.page === page) {
+                btn.classList.add('active');
+            }
         });
-        event.currentTarget.classList.add('active');
-        
-        console.log(`Переход на страницу: ${targetPage}`);
+        console.log('Switched to page:', page);
+    }
+
+    handleNavigation(event) {
+        const targetPage = event.currentTarget.dataset.page;
+        this.switchToPage(targetPage);
+    }
+
+    loadGameData() {
+        try {
+            const savedData = localStorage.getItem('miney_friends_save');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                this.coins = data.coins || 200;
+                this.currentLimit = data.currentLimit || 262;
+                console.log('Game data loaded');
+            }
+        } catch (error) {
+            console.error('Error loading game data:', error);
+        }
+    }
+
+    saveGameData() {
+        try {
+            const data = {
+                coins: this.coins,
+                currentLimit: this.currentLimit,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('miney_friends_save', JSON.stringify(data));
+            console.log('Game data saved');
+        } catch (error) {
+            console.error('Error saving game data:', error);
+        }
     }
 }
 
-// Инициализация когда DOM загружен
-document.addEventListener('DOMContentLoaded', () => {
-    window.game = new ClickerGame();
+// Запускаем игру когда страница полностью загружена
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, starting game...');
+    window.game = new MineyFriendsGame();
 });
 
-// Сохраняем данные при закрытии страницы
+// Сохраняем при закрытии
 window.addEventListener('beforeunload', () => {
     if (window.game) {
         window.game.saveGameData();
