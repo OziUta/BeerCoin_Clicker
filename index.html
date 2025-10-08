@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miney Friends</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Экран загрузки -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loader"></div>
+            <h1>Miney Friends</h1>
+            <p>Загрузка...</p>
+        </div>
+    </div>
+
+    <!-- Главный игровой экран -->
+    <div id="gameScreen" class="game-screen" style="display: none;">
+        <!-- Верхняя панель с ресурсами -->
+        <div class="top-panel">
+            <div class="resources">
+                <div class="resource silver">
+                    <span class="resource-icon">🪙</span>
+                    <span class="resource-count" id="silverCount">200</span>
+                </div>
+                <div class="resource gold">
+                    <span class="resource-icon">💰</span>
+                    <span class="resource-count" id="goldCount">060</span>
+                </div>
+            </div>
+            <div class="wallet">
+                <span class="wallet-icon">👛</span>
+                <span class="wallet-text">Wallet</span>
+            </div>
+        </div>
+
+        <!-- Основная игровая область -->
+        <div class="game-area">
+            <!-- Лимит под картинкой -->
+            <div class="limit-display-main">
+                <span class="limit-count" id="currentLimit">262</span>
+                <span class="limit-separator">/</span>
+                <span class="limit-total" id="totalLimit">5600</span>
+            </div>
+
+            <!-- Кликабельная картинка -->
+            <div class="clickable-area">
+                <img src="images/beer.png" alt="Miney Friend" id="clickImage" class="click-image">
+                <div id="effectsContainer" class="effects-container"></div>
+            </div>
+
+            <!-- Название игры -->
+            <div class="game-title">Miney Friends</div>
+        </div>
+
+        <!-- Нижняя навигация -->
+        <nav class="bottom-nav">
+            <button class="nav-btn" data-page="shop">
+                <span class="nav-icon">🛒</span>
+                <span class="nav-text">Магазин</span>
+            </button>
+            <button class="nav-btn active" data-page="main">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Главная</span>
+            </button>
+            <button class="nav-btn" data-page="profile">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Профиль</span>
+            </button>
+        </nav>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
