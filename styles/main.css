@@ -326,4 +326,48 @@ body {
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.7; }
+
+}
+/* Переменные для Telegram темы */
+:root {
+    --tg-bg-color: #1a1a2e;
+    --tg-text-color: #ffffff;
+    --tg-button-color: #4cc9f0;
+    --tg-button-text-color: #ffffff;
+}
+
+/* Адаптация под Telegram App */
+body {
+    /* Предотвращаем скролл в Telegram */
+    overflow: hidden;
+    /* Учитываем безопасные зоны на разных устройствах */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Оптимизация для мобильных устройств */
+@media (max-height: 700px) {
+    .click-image {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .game-title {
+        font-size: 1.4em;
+        margin-top: 10px;
+    }
+    
+    .limit-display-main {
+        margin-bottom: 20px;
+        font-size: 1.2em;
+    }
+}
+
+/* Улучшение касаний для мобильных */
+.click-image {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.nav-btn {
+    -webkit-tap-highlight-color: transparent;
 }
