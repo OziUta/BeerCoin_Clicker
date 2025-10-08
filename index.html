@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Miney Friends</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
@@ -30,7 +31,7 @@
                     <span class="resource-count" id="goldCount">060</span>
                 </div>
             </div>
-            <div class="wallet">
+            <div class="wallet" id="walletBtn">
                 <span class="wallet-icon">👛</span>
                 <span class="wallet-text">Wallet</span>
             </div>
@@ -47,7 +48,7 @@
 
             <!-- Кликабельная картинка -->
             <div class="clickable-area">
-                <img src="images/beer.png" alt="Miney Friend" id="clickImage" class="click-image">
+                <img src="images/bat.png" alt="Miney Friend" id="clickImage" class="click-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiByeD0iMjAiIGZpbGw9IiM0Y2M5ZjAiIGZpbGwtb3BhY2l0eT0iMC4xIi8+CjxwYXRoIGQ9Ik04MCA2MEM4MCA1MSAxMDAgNDAgMTE2IDQwQzEzMiA0MCAxNDIgNDggMTQyIDYwQzE0MiA3MiAxMzIgODAgMTE2IDgwQzEwMCA4MCA4MCA2OSA4MCA2MFoiIGZpbGw9IiM0Y2M5ZjAiLz4KPHBhdGggZD0iTTYwIDgwQzYwIDY4IDgwIDYwIDEwMCA2MEMxMjAgNjAgMTQwIDY4IDE0MCA4MEMxNDAgOTIgMTIwIDEwMCAxMDAgMTAwQzgwIDEwMCA2MCA5MiA2MCA4MFoiIGZpbGw9IiM0Y2M5ZjAiLz4KPHBhdGggZD0iTTQwIDEwMEM0MCA4OCA2MCA4MCA4MCA4MEMxMDAgODAgMTIwIDg4IDEyMCAxMDBDMTIwIDExMiAxMDAgMTIwIDgwIDEyMEM2MCAxMjAgNDAgMTEyIDQwIDEwMFoiIGZpbGw9IiM0Y2M5ZjAiLz4KPHBhdGggZD0iTTYwIDEyMEM2MCAxMDggODAgMTAwIDEwMCAxMDBDMTIwIDEwMCAxNDAgMTA4IDE0MCAxMjBDMTQwIDEzMiAxMjAgMTQwIDEwMCAxNDBDODAgMTQwIDYwIDEzMiA2MCAxMjBaIiBmaWxsPSIjNGNjOWYwIi8+CjxyZWN0IHg9Ijc1IiB5PSIxNDAiIHdpZHRoPSI1MCIgaGVpZ2h0PSIyMCIgcng9IjEwIiBmaWxsPSIjNGNjOWYwIi8+Cjwvc3ZnPgo='">
                 <div id="effectsContainer" class="effects-container"></div>
             </div>
 
@@ -72,6 +73,7 @@
         </nav>
     </div>
 
+    <script src="js/telegram.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
