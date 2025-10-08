@@ -10,7 +10,6 @@ body {
     color: white;
     overflow: hidden;
     height: 100vh;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 /* Экран загрузки */
@@ -25,7 +24,6 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    transition: opacity 0.5s ease;
 }
 
 .loading-content {
@@ -58,13 +56,12 @@ body {
     opacity: 0.8;
 }
 
-/* Главный игровой экран */
+/* Главный экран */
 .game-screen {
     width: 100%;
     height: 100vh;
-    display: flex;
+    display: none;
     flex-direction: column;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 }
 
 /* Верхняя панель */
@@ -74,7 +71,6 @@ body {
     align-items: center;
     padding: 15px 20px;
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
     min-height: 70px;
 }
 
@@ -86,7 +82,6 @@ body {
     background: rgba(255, 255, 255, 0.15);
     border-radius: 25px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .coins-icon {
@@ -112,11 +107,10 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
     padding: 20px;
 }
 
-/* Отображение лимита */
+/* Лимит */
 .limit-display-main {
     display: flex;
     align-items: center;
@@ -158,24 +152,17 @@ body {
     align-items: center;
     border-radius: 20px;
     border: 3px solid #4cc9f0;
-    box-shadow: 0 8px 32px rgba(76, 201, 240, 0.3);
     background: rgba(76, 201, 240, 0.1);
-    overflow: hidden;
-}
-
-.click-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
     cursor: pointer;
-    transition: all 0.1s ease;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
 }
 
-.click-image:active {
+.fallback-bat {
+    font-size: 4em;
+    transition: transform 0.1s ease;
+}
+
+.image-container:active .fallback-bat {
     transform: scale(0.95);
-    box-shadow: 0 4px 16px rgba(76, 201, 240, 0.5);
 }
 
 /* Название игры */
@@ -185,10 +172,9 @@ body {
     color: #4cc9f0;
     margin-top: 20px;
     text-align: center;
-    text-shadow: 0 2px 10px rgba(76, 201, 240, 0.5);
 }
 
-/* Анимации эффектов */
+/* Эффекты */
 .effects-container {
     position: absolute;
     top: 0;
@@ -204,7 +190,6 @@ body {
     font-weight: bold;
     color: #4cc9f0;
     animation: floatUp 1.5s ease-out forwards;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 @keyframes floatUp {
@@ -218,14 +203,13 @@ body {
     }
 }
 
-/* Нижняя навигация */
+/* Навигация */
 .bottom-nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 15px 0;
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     height: 80px;
 }
@@ -236,126 +220,25 @@ body {
     align-items: center;
     background: none;
     border: none;
+    color: white;
     cursor: pointer;
     padding: 10px 20px;
     border-radius: 20px;
-    transition: all 0.3s ease;
     opacity: 0.6;
     min-width: 70px;
-    -webkit-tap-highlight-color: transparent;
 }
 
 .nav-btn.active {
     opacity: 1;
     background: rgba(76, 201, 240, 0.2);
-    transform: translateY(-5px);
-}
-
-.nav-btn.active .nav-icon {
-    transform: scale(1.1);
 }
 
 .nav-icon {
     font-size: 1.8em;
     margin-bottom: 6px;
-    transition: transform 0.3s ease;
 }
 
 .nav-text {
     font-size: 0.75em;
-    color: white;
     opacity: 0.8;
-}
-
-/* Адаптивность для мобильных */
-@media (max-width: 480px) {
-    .image-container {
-        width: 180px;
-        height: 180px;
-    }
-    
-    .limit-display-main {
-        font-size: 1.3em;
-        padding: 10px 20px;
-    }
-    
-    .game-title {
-        font-size: 1.5em;
-    }
-    
-    .coins-display {
-        padding: 8px 16px;
-    }
-    
-    .coins-count {
-        font-size: 1.2em;
-    }
-}
-
-@media (max-height: 700px) {
-    .image-container {
-        width: 160px;
-        height: 160px;
-    }
-    
-    .game-title {
-        font-size: 1.4em;
-        margin-top: 10px;
-    }
-    
-    .limit-display-main {
-        margin-bottom: 20px;
-        font-size: 1.2em;
-    }
-    
-    .top-panel {
-        padding: 10px 15px;
-        min-height: 60px;
-    }
-}
-
-/* Эффекты для восстановления и ограничений */
-.recovery-complete {
-    color: #4CAF50 !important;
-    font-size: 1.1em !important;
-}
-
-.limit-exceeded {
-    color: #ff4444 !important;
-    font-size: 1.1em !important;
-    animation: shake 0.5s ease-in-out;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-
-.limit-display-main.recovering .limit-count {
-    color: #4CAF50;
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-}
-
-/* Fallback для отсутствующей картинки */
-.image-container::before {
-    content: "🦇";
-    font-size: 4em;
-    position: absolute;
-    z-index: 1;
-    opacity: 0.3;
-    display: none;
-}
-
-.image-container.fallback::before {
-    display: block;
-}
-
-.image-container.fallback .click-image {
-    display: none;
 }
