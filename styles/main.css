@@ -10,6 +10,7 @@ body {
     color: white;
     overflow: hidden;
     height: 100vh;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 /* Экран загрузки */
@@ -69,62 +70,39 @@ body {
 /* Верхняя панель */
 .top-panel {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 15px 20px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
+    min-height: 70px;
 }
 
-.resources {
-    display: flex;
-    gap: 20px;
-}
-
-.resource {
+.coins-display {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    gap: 12px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 25px;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.resource-icon {
-    font-size: 1.2em;
+.coins-icon {
+    font-size: 1.5em;
 }
 
-.resource-count {
+.coins-count {
     font-weight: bold;
-    font-size: 1.1em;
-}
-
-.silver .resource-count {
+    font-size: 1.4em;
     color: #c0c0c0;
 }
 
-.gold .resource-count {
-    color: #ffd700;
-}
-
-.wallet {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.wallet-icon {
-    font-size: 1.2em;
-}
-
-.wallet-text {
+.coins-text {
     font-size: 0.9em;
     opacity: 0.8;
+    color: #c0c0c0;
 }
 
 /* Игровая область */
@@ -172,14 +150,27 @@ body {
     margin: 20px 0;
 }
 
-.click-image {
+.image-container {
     width: 200px;
     height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.1s ease;
     border: 3px solid #4cc9f0;
     box-shadow: 0 8px 32px rgba(76, 201, 240, 0.3);
+    background: rgba(76, 201, 240, 0.1);
+    overflow: hidden;
+}
+
+.click-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .click-image:active {
@@ -251,6 +242,7 @@ body {
     transition: all 0.3s ease;
     opacity: 0.6;
     min-width: 70px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .nav-btn.active {
@@ -275,9 +267,9 @@ body {
     opacity: 0.8;
 }
 
-/* Адаптивность */
+/* Адаптивность для мобильных */
 @media (max-width: 480px) {
-    .click-image {
+    .image-container {
         width: 180px;
         height: 180px;
     }
@@ -291,12 +283,34 @@ body {
         font-size: 1.5em;
     }
     
-    .resource {
-        padding: 6px 12px;
+    .coins-display {
+        padding: 8px 16px;
     }
     
-    .resources {
-        gap: 10px;
+    .coins-count {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-height: 700px) {
+    .image-container {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .game-title {
+        font-size: 1.4em;
+        margin-top: 10px;
+    }
+    
+    .limit-display-main {
+        margin-bottom: 20px;
+        font-size: 1.2em;
+    }
+    
+    .top-panel {
+        padding: 10px 15px;
+        min-height: 60px;
     }
 }
 
@@ -326,48 +340,22 @@ body {
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.7; }
-
-}
-/* Переменные для Telegram темы */
-:root {
-    --tg-bg-color: #1a1a2e;
-    --tg-text-color: #ffffff;
-    --tg-button-color: #4cc9f0;
-    --tg-button-text-color: #ffffff;
 }
 
-/* Адаптация под Telegram App */
-body {
-    /* Предотвращаем скролл в Telegram */
-    overflow: hidden;
-    /* Учитываем безопасные зоны на разных устройствах */
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+/* Fallback для отсутствующей картинки */
+.image-container::before {
+    content: "🦇";
+    font-size: 4em;
+    position: absolute;
+    z-index: 1;
+    opacity: 0.3;
+    display: none;
 }
 
-/* Оптимизация для мобильных устройств */
-@media (max-height: 700px) {
-    .click-image {
-        width: 160px;
-        height: 160px;
-    }
-    
-    .game-title {
-        font-size: 1.4em;
-        margin-top: 10px;
-    }
-    
-    .limit-display-main {
-        margin-bottom: 20px;
-        font-size: 1.2em;
-    }
+.image-container.fallback::before {
+    display: block;
 }
 
-/* Улучшение касаний для мобильных */
-.click-image {
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-}
-
-.nav-btn {
-    -webkit-tap-highlight-color: transparent;
+.image-container.fallback .click-image {
+    display: none;
 }
