@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Shop</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🛍️ Мой Магазин</h1>
+        </header>
+
+        <div id="loading">Загрузка...</div>
+
+        <div id="categories" class="categories hidden">
+            <h2>Категории</h2>
+            <div class="categories-grid" id="categoriesGrid"></div>
+        </div>
+
+        <div id="products" class="products hidden">
+            <div class="products-header">
+                <button id="backToCategories" class="back-btn">← Назад</button>
+                <h2 id="categoryTitle">Товары</h2>
+            </div>
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+
+        <div id="cart" class="cart hidden">
+            <div class="cart-header">
+                <button id="backToProducts" class="back-btn">← Назад</button>
+                <h2>Корзина</h2>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-total">
+                <strong>Итого: <span id="totalAmount">0</span> ₽</strong>
+                <button id="checkout" class="checkout-btn">Оформить заказ</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-icon" id="cartIcon">
+        🛒 <span id="cartCount">0</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
