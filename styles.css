@@ -973,7 +973,7 @@ body {
 }
 
 .test-navigation {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .next-question-btn {
@@ -1093,3 +1093,4 @@ body {
         font-size: 1.1rem;
     }
 }
+
