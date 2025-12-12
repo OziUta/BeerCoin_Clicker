@@ -683,7 +683,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 .nav-row {
@@ -1093,4 +1093,5 @@ body {
         font-size: 1.1rem;
     }
 }
+
 
