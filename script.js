@@ -28,9 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const backFromTestBtn = document.getElementById('back-from-test-btn');
     const reviewTravelBtn = document.getElementById('review-travel-btn');
     
-    // Мобильное меню
-    const mobileNavBtns = document.querySelectorAll('.mobile-nav-btn');
-    
     // Элементы для статистики
     const wordsLearnedElement = document.querySelector('.stat-value');
     
@@ -146,7 +143,6 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 loadingScreen.classList.remove('active');
                 mainMenu.classList.add('active');
-                updateMobileNav('main-menu');
             }, 500);
         }
         
@@ -158,29 +154,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Обработчики кнопок главного меню
     learnWordsBtn.addEventListener('click', function() {
         showScreen(topicsScreen);
-        updateMobileNav('topics-screen');
         renderTopics();
     });
     
     dictionaryBtn.addEventListener('click', function() {
         showNotification('Экран "Словарь" будет реализован позже');
-        updateMobileNav('dictionary');
     });
     
     reviewBtn.addEventListener('click', function() {
         showNotification('Экран "Повторение" будет реализован позже');
-        updateMobileNav('review');
     });
     
     // Обработчики навигации
     backToMainBtn.addEventListener('click', function() {
         showScreen(mainMenu);
-        updateMobileNav('main-menu');
     });
     
     backToTopicsBtn.addEventListener('click', function() {
         showScreen(topicsScreen);
-        updateMobileNav('topics-screen');
     });
     
     backToCategoriesBtn.addEventListener('click', function() {
@@ -195,36 +186,6 @@ document.addEventListener('DOMContentLoaded', function() {
     reviewTravelBtn.addEventListener('click', function() {
         startTest();
     });
-    
-    // Обработчики мобильного меню
-    mobileNavBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const screen = this.getAttribute('data-screen');
-            
-            if (screen === 'main-menu') {
-                showScreen(mainMenu);
-            } else if (screen === 'topics-screen') {
-                showScreen(topicsScreen);
-                renderTopics();
-            } else if (screen === 'dictionary') {
-                showNotification('Экран "Словарь" будет реализован позже');
-            } else if (screen === 'review') {
-                showNotification('Экран "Повторение" будет реализован позже');
-            }
-            
-            updateMobileNav(screen);
-        });
-    });
-    
-    // Функция обновления мобильного меню
-    function updateMobileNav(activeScreen) {
-        mobileNavBtns.forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.getAttribute('data-screen') === activeScreen) {
-                btn.classList.add('active');
-            }
-        });
-    }
     
     // Функция отображения экрана
     function showScreen(screenToShow) {
@@ -401,23 +362,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }, 300);
         });
-    });
-    
-    // Обработчик кнопки воспроизведения аудио
-    document.getElementById('play-audio').addEventListener('click', function() {
-        if (currentWords.length > 0) {
-            const currentWord = currentWords[currentWordIndex].word;
-            
-            // В реальном приложении здесь будет использование Web Speech API
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(currentWord);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.8;
-                speechSynthesis.speak(utterance);
-            } else {
-                showNotification(`Произношение: ${currentWord}`);
-            }
-        }
     });
     
     // Функция для начала тестирования
