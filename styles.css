@@ -801,6 +801,9 @@ body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    height: 100vh;
 }
 
 .test-header {
@@ -809,6 +812,7 @@ body {
     justify-content: space-between;
     margin-bottom: 20px;
     padding-top: 10px;
+    flex-shrink: 0;
 }
 
 .test-title {
@@ -841,6 +845,14 @@ body {
     flex-shrink: 0;
 }
 
+.test-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 20px;
+    border-radius: 20px;
+}
+
 .test-card {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -849,6 +861,8 @@ body {
     margin-bottom: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    min-height: auto;
+    flex-shrink: 0;
 }
 
 .question-type {
@@ -935,6 +949,7 @@ body {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     display: none;
+    word-break: break-word;
 }
 
 .feedback-correct {
@@ -974,6 +989,7 @@ body {
 
 .test-navigation {
     margin-bottom: 20px;
+    flex-shrink: 0;
 }
 
 .next-question-btn {
@@ -1005,8 +1021,6 @@ body {
     transform: scale(0.98);
     background: rgba(138, 43, 226, 0.3);
 }
-
-
 
 /* Уведомления */
 .notification {
@@ -1057,5 +1071,31 @@ body {
     
     .word-translation p {
         font-size: 1.1rem;
+    }
+}
+
+@media (max-height: 600px) {
+    .test-card {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .question-word {
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+    }
+    
+    .options-container {
+        gap: 8px;
+    }
+    
+    .option-btn {
+        padding: 14px;
+        font-size: 0.9rem;
+    }
+    
+    .test-feedback {
+        padding: 12px;
+        margin-top: 15px;
     }
 }
