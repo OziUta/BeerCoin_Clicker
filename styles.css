@@ -603,7 +603,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 20px;
     padding: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     flex: 1;
@@ -682,8 +682,8 @@ body {
 .navigation-buttons {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-top: 5px;
+    gap: 12px;
+    margin-top: 20px;
 }
 
 .nav-row {
@@ -973,7 +973,7 @@ body {
 }
 
 .test-navigation {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .next-question-btn {
@@ -1006,41 +1006,7 @@ body {
     background: rgba(138, 43, 226, 0.3);
 }
 
-.test-stats {
-    display: flex;
-    gap: 12px;
-    margin-top: auto;
-}
 
-.test-stats .stat-item {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    padding: 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    backdrop-filter: blur(10px);
-}
-
-.test-stats .stat-item i {
-    font-size: 1.1rem;
-}
-
-.test-stats .stat-item i.fa-check-circle {
-    color: #4caf50;
-}
-
-.test-stats .stat-item i.fa-times-circle {
-    color: #ff5757;
-}
-
-.test-stats .stat-item span {
-    color: white;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
 
 /* Уведомления */
 .notification {
@@ -1093,9 +1059,3 @@ body {
         font-size: 1.1rem;
     }
 }
-
-
-
-
-
-
