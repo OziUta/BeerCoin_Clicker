@@ -13,7 +13,6 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding-bottom: 60px; /* Для мобильного меню */
     overflow-x: hidden;
 }
 
@@ -156,11 +155,11 @@ body {
     display: flex;
     flex-direction: column;
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-    padding-bottom: 80px; /* Для мобильного меню */
+    padding-bottom: 30px;
 }
 
 .app-header {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     text-align: center;
     padding-top: 10px;
 }
@@ -309,7 +308,6 @@ body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
-    padding-bottom: 70px;
 }
 
 .topics-header {
@@ -460,7 +458,6 @@ body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
-    padding-bottom: 70px;
 }
 
 .categories-list {
@@ -568,7 +565,6 @@ body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
-    padding-bottom: 70px;
 }
 
 .words-header {
@@ -621,7 +617,7 @@ body {
 }
 
 .word-main h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: white;
     margin-bottom: 8px;
@@ -682,39 +678,7 @@ body {
     word-break: break-word;
 }
 
-.word-audio {
-    margin-top: 20px;
-}
-
-.audio-btn {
-    background: rgba(138, 43, 226, 0.15);
-    border: 1px solid rgba(138, 43, 226, 0.3);
-    border-radius: 12px;
-    padding: 14px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    color: white;
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-    backdrop-filter: blur(10px);
-    border: none;
-    touch-action: manipulation;
-}
-
-.audio-btn:active {
-    transform: scale(0.98);
-    background: rgba(138, 43, 226, 0.25);
-}
-
-.audio-btn i {
-    font-size: 1.1rem;
-}
-
+/* Обновлённые кнопки навигации для мобильных */
 .navigation-buttons {
     display: flex;
     flex-direction: column;
@@ -722,24 +686,31 @@ body {
     margin-top: 20px;
 }
 
+.nav-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
 .nav-btn {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
-    padding: 14px 16px;
+    padding: 14px 12px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     color: white;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     border: none;
     flex: 1;
-    justify-content: center;
     touch-action: manipulation;
+    min-height: 50px;
 }
 
 .nav-btn:active {
@@ -762,11 +733,12 @@ body {
 }
 
 .difficulty-btn {
-    padding: 12px 8px;
+    padding: 12px 6px;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -786,9 +758,10 @@ body {
 }
 
 .difficulty-btn span {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 500;
     text-align: center;
+    line-height: 1.2;
 }
 
 .hard-btn {
@@ -828,7 +801,6 @@ body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
-    padding-bottom: 70px;
 }
 
 .test-header {
@@ -924,7 +896,7 @@ body {
     border-radius: 12px;
     padding: 16px;
     color: white;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1070,58 +1042,6 @@ body {
     font-weight: 500;
 }
 
-/* Мобильное нижнее меню */
-.mobile-bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(15, 12, 41, 0.95);
-    backdrop-filter: blur(15px);
-    border-top: 1px solid rgba(138, 43, 226, 0.2);
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    z-index: 1000;
-    height: 60px;
-}
-
-.mobile-nav-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    color: #9370DB;
-    font-size: 0.7rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 8px 5px;
-    border-radius: 8px;
-    background: transparent;
-    border: none;
-    flex: 1;
-    max-width: 80px;
-    touch-action: manipulation;
-}
-
-.mobile-nav-btn:active {
-    transform: scale(0.95);
-}
-
-.mobile-nav-btn i {
-    font-size: 1.2rem;
-    margin-bottom: 2px;
-}
-
-.mobile-nav-btn.active {
-    color: white;
-    background: rgba(138, 43, 226, 0.2);
-}
-
-.mobile-nav-btn span {
-    font-weight: 500;
-}
-
 /* Уведомления */
 .notification {
     position: fixed;
@@ -1152,10 +1072,24 @@ body {
         border-left: 1px solid rgba(255, 255, 255, 0.1);
         border-right: 1px solid rgba(255, 255, 255, 0.1);
     }
+}
+
+/* Медиа-запрос для очень маленьких экранов */
+@media (max-width: 360px) {
+    .difficulty-btn span {
+        font-size: 0.7rem;
+    }
     
-    .mobile-bottom-nav {
-        max-width: 500px;
-        left: 50%;
-        transform: translateX(-50%);
+    .nav-btn {
+        font-size: 0.85rem;
+        padding: 12px 8px;
+    }
+    
+    .word-main h1 {
+        font-size: 1.6rem;
+    }
+    
+    .word-translation p {
+        font-size: 1.1rem;
     }
 }
