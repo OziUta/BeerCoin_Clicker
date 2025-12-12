@@ -469,44 +469,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Показываем обратную связь
-        testFeedbackElement.style.display = 'block';
-        
-        if (selected === correct) {
-            correctAnswersCount++;
-            
-            testFeedbackElement.innerHTML = `
-                <div class="feedback-correct">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Правильно!</span>
-                </div>
-                <div class="feedback-translation">
-                    <strong>Перевод:</strong> ${question.word} - ${correct}
-                </div>
-                <div class="feedback-example">
-                    "${question.example}"
-                </div>
-            `;
-        } else {
-            wrongAnswersCount++;
-            
-            testFeedbackElement.innerHTML = `
-                <div class="feedback-wrong">
-                    <i class="fas fa-times-circle"></i>
-                    <span>Неправильно</span>
-                </div>
-                <div class="feedback-translation">
-                    <strong>Правильный ответ:</strong> ${question.word} - ${correct}
-                </div>
-                <div class="feedback-translation">
-                    <strong>Ваш ответ:</strong> ${selected}
-                </div>
-                <div class="feedback-example">
-                    "${question.example}"
-                </div>
-            `;
-        }
-        
         // Активируем кнопку следующего вопроса
         nextQuestionBtn.disabled = false;
     }
@@ -614,3 +576,4 @@ document.addEventListener('DOMContentLoaded', function() {
         touchStartY = e.touches[0].clientY;
     }, { passive: true });
 });
+
