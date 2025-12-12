@@ -2,49 +2,334 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Shop</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LinguaBot - Learn English</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>🛍️ Мой Магазин</h1>
-        </header>
-
-        <div id="loading">Загрузка...</div>
-
-        <div id="categories" class="categories hidden">
-            <h2>Категории</h2>
-            <div class="categories-grid" id="categoriesGrid"></div>
-        </div>
-
-        <div id="products" class="products hidden">
-            <div class="products-header">
-                <button id="backToCategories" class="back-btn">← Назад</button>
-                <h2 id="categoryTitle">Товары</h2>
+    <!-- Загрузочный экран -->
+    <div id="loading-screen" class="screen active">
+        <div class="loading-container">
+            <div class="logo">
+                <i class="fas fa-language"></i>
+                <h1>LinguaBot</h1>
             </div>
-            <div class="products-grid" id="productsGrid"></div>
-        </div>
-
-        <div id="cart" class="cart hidden">
-            <div class="cart-header">
-                <button id="backToProducts" class="back-btn">← Назад</button>
-                <h2>Корзина</h2>
+            <p class="tagline">Master English effortlessly</p>
+            
+            <div class="loading-progress">
+                <div class="loading-text">Getting your lesson ready...</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <div class="progress-percentage" id="progress-percentage">0%</div>
             </div>
-            <div class="cart-items" id="cartItems"></div>
-            <div class="cart-total">
-                <strong>Итого: <span id="totalAmount">0</span> ₽</strong>
-                <button id="checkout" class="checkout-btn">Оформить заказ</button>
+            
+            <div class="tip-box">
+                <i class="fas fa-lightbulb"></i>
+                <p>Tip: Practice 5 minutes every day!</p>
+            </div>
+            
+            <div class="version-info">
+                v2.1.0 • Secured by Telegram
             </div>
         </div>
     </div>
-
-    <div class="cart-icon" id="cartIcon">
-        🛒 <span id="cartCount">0</span>
+    
+    <!-- Главное меню -->
+    <div id="main-menu" class="screen">
+        <div class="container">
+            <header class="app-header">
+                <h1>LinguaBot</h1>
+                <p class="app-subtitle">Learn English with AI</p>
+            </header>
+            
+            <div class="buttons-container">
+                <div class="stat-box-wide">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Words Learned</div>
+                    </div>
+                </div>
+                
+                <button class="main-btn" id="learn-words-btn">
+                    <div class="btn-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="btn-text">
+                        <div class="btn-title">Учить слова</div>
+                        <div class="btn-subtitle">Начать новый урок</div>
+                    </div>
+                    <div class="btn-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </button>
+                
+                <button class="main-btn" id="dictionary-btn">
+                    <div class="btn-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="btn-text">
+                        <div class="btn-title">Словарь</div>
+                        <div class="btn-subtitle">Все изученные слова</div>
+                    </div>
+                    <div class="btn-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </button>
+                
+                <button class="main-btn" id="review-btn">
+                    <div class="btn-icon">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <div class="btn-text">
+                        <div class="btn-title">Повторение</div>
+                        <div class="btn-subtitle">Тренировка памяти</div>
+                    </div>
+                    <div class="btn-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </button>
+            </div>
+            
+            <!-- Кнопка меню для телефона -->
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
     </div>
-
+    
+    <!-- Экран с темами -->
+    <div id="topics-screen" class="screen">
+        <div class="topics-container">
+            <header class="topics-header">
+                <button class="back-btn" id="back-to-main-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1>Выберите тему</h1>
+                <div class="placeholder"></div>
+            </header>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Поиск тем..." id="search-topics">
+            </div>
+            
+            <div class="topics-list" id="topics-list">
+                <!-- Темы будут добавлены через JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Экран подкатегорий путешествий -->
+    <div id="travel-categories-screen" class="screen">
+        <div class="categories-container">
+            <header class="topics-header">
+                <button class="back-btn" id="back-to-topics-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1>Путешествия</h1>
+                <div class="placeholder"></div>
+            </header>
+            
+            <div class="categories-list">
+                <button class="category-card" data-category="nouns">
+                    <div class="category-icon">
+                        <i class="fas fa-file-word"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Существительные</h3>
+                        <p>54 слова</p>
+                    </div>
+                </button>
+                
+                <button class="category-card" data-category="verbs">
+                    <div class="category-icon">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Глаголы</h3>
+                        <p>27 слов</p>
+                    </div>
+                </button>
+                
+                <button class="category-card" data-category="adjectives">
+                    <div class="category-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Прилагательные</h3>
+                        <p>21 слово</p>
+                    </div>
+                </button>
+                
+                <button class="category-card" data-category="phrases">
+                    <div class="category-icon">
+                        <i class="fas fa-comment-alt"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Полезные фразы</h3>
+                        <p>10 фраз</p>
+                    </div>
+                </button>
+            </div>
+            
+            <div class="review-section">
+                <button class="review-all-btn" id="review-travel-btn">
+                    <i class="fas fa-redo"></i>
+                    <span>Повторить все слова темы</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Экран изучения слов -->
+    <div id="words-screen" class="screen">
+        <div class="words-container">
+            <header class="words-header">
+                <button class="back-btn" id="back-to-categories-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="words-title">
+                    <h2 id="current-category-title">Существительные</h2>
+                    <p id="current-category-subtitle">Путешествия</p>
+                </div>
+            </header>
+            
+            <div class="word-card">
+                <div class="word-main">
+                    <h1 id="current-word">trip</h1>
+                    <div class="word-transcription" id="current-transcription">/trɪp/</div>
+                    <div class="word-type" id="current-type">существительное</div>
+                </div>
+                
+                <div class="word-translation">
+                    <h3>Перевод:</h3>
+                    <p id="current-translation">поездка</p>
+                </div>
+                
+                <div class="word-example">
+                    <h3>Пример:</h3>
+                    <p id="current-example">We had a wonderful trip to Italy last summer.</p>
+                    <p class="example-translation" id="current-example-translation">У нас была замечательная поездка в Италию прошлым летом.</p>
+                </div>
+                
+                <div class="word-audio">
+                    <button class="audio-btn" id="play-audio">
+                        <i class="fas fa-volume-up"></i>
+                        <span>Прослушать произношение</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button class="nav-btn prev-btn" id="prev-word">
+                    <i class="fas fa-chevron-left"></i>
+                    <span>Назад</span>
+                </button>
+                
+                <div class="difficulty-buttons">
+                    <button class="difficulty-btn hard-btn" data-difficulty="hard">
+                        <i class="fas fa-times"></i>
+                        <span>Трудно</span>
+                    </button>
+                    <button class="difficulty-btn good-btn" data-difficulty="good">
+                        <i class="fas fa-check"></i>
+                        <span>Хорошо</span>
+                    </button>
+                    <button class="difficulty-btn easy-btn" data-difficulty="easy">
+                        <i class="fas fa-star"></i>
+                        <span>Легко</span>
+                    </button>
+                </div>
+                
+                <button class="nav-btn next-btn" id="next-word">
+                    <span>Далее</span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Экран тестирования (повторения) -->
+    <div id="test-screen" class="screen">
+        <div class="test-container">
+            <header class="test-header">
+                <button class="back-btn" id="back-from-test-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="test-title">
+                    <h2>Повторение</h2>
+                    <p>Путешествия</p>
+                </div>
+                <div class="test-progress">
+                    <span id="current-question">1</span>/<span id="total-questions">10</span>
+                </div>
+            </header>
+            
+            <div class="test-card">
+                <div class="question-type">
+                    <span id="question-type">Выберите правильный перевод</span>
+                </div>
+                
+                <div class="question-word">
+                    <h1 id="test-word">trip</h1>
+                    <div class="word-transcription" id="test-transcription">/trɪp/</div>
+                </div>
+                
+                <div class="options-container" id="options-container">
+                    <!-- Варианты ответов будут добавлены через JavaScript -->
+                </div>
+                
+                <div class="test-feedback" id="test-feedback">
+                    <!-- Обратная связь будет показана после ответа -->
+                </div>
+            </div>
+            
+            <div class="test-navigation">
+                <button class="next-question-btn" id="next-question-btn" disabled>
+                    <span>Следующий вопрос</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <div class="test-stats">
+                <div class="stat-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Правильно: <span id="correct-answers">0</span></span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-times-circle"></i>
+                    <span>Неправильно: <span id="wrong-answers">0</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Мобильное нижнее меню -->
+    <div class="mobile-bottom-nav">
+        <button class="mobile-nav-btn active" data-screen="main-menu">
+            <i class="fas fa-home"></i>
+            <span>Главная</span>
+        </button>
+        <button class="mobile-nav-btn" data-screen="topics-screen">
+            <i class="fas fa-book"></i>
+            <span>Учить</span>
+        </button>
+        <button class="mobile-nav-btn" data-screen="dictionary">
+            <i class="fas fa-book-open"></i>
+            <span>Словарь</span>
+        </button>
+        <button class="mobile-nav-btn" data-screen="review">
+            <i class="fas fa-redo"></i>
+            <span>Повторение</span>
+        </button>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
