@@ -7,27 +7,34 @@
     -webkit-touch-callout: none;
 }
 
+/* ФИКС ДЛЯ МОБИЛЬНЫХ: Правильная высота */
+html, body {
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
+
 body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     color: white;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
+    overflow: hidden;
+    touch-action: pan-y;
 }
 
 .screen {
     display: none;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
 }
 
 .screen.active {
@@ -44,7 +51,7 @@ body {
     padding: 20px;
     text-align: center;
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-    height: 100vh;
+    height: 100%;
 }
 
 .logo {
@@ -156,6 +163,8 @@ body {
     flex-direction: column;
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     padding-bottom: 30px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .app-header {
@@ -308,6 +317,8 @@ body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .topics-header {
@@ -316,6 +327,7 @@ body {
     justify-content: space-between;
     margin-bottom: 20px;
     padding-top: 10px;
+    flex-shrink: 0;
 }
 
 .back-btn {
@@ -372,6 +384,7 @@ body {
     gap: 10px;
     margin-bottom: 20px;
     backdrop-filter: blur(10px);
+    flex-shrink: 0;
 }
 
 .search-box i {
@@ -458,6 +471,8 @@ body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .categories-list {
@@ -527,6 +542,7 @@ body {
 
 .review-section {
     margin-top: 10px;
+    flex-shrink: 0;
 }
 
 .review-all-btn {
@@ -565,6 +581,8 @@ body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .words-header {
@@ -572,6 +590,7 @@ body {
     align-items: center;
     margin-bottom: 20px;
     padding-top: 10px;
+    flex-shrink: 0;
 }
 
 .words-title {
@@ -606,7 +625,7 @@ body {
     margin-bottom: 15px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    flex: 1;
+    flex-shrink: 0;
 }
 
 .word-main {
@@ -684,6 +703,7 @@ body {
     flex-direction: column;
     gap: 12px;
     margin-top: 20px;
+    flex-shrink: 0;
 }
 
 .nav-row {
@@ -794,25 +814,26 @@ body {
     background: rgba(33, 150, 243, 0.25);
 }
 
-/* Экран тестирования */
+/* ВАЖНО: Экран тестирования с правильным скроллингом */
 .test-container {
     flex: 1;
-    padding: 15px;
-    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
     height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    overflow: hidden;
+    position: relative;
 }
 
 .test-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
-    padding-top: 10px;
+    padding: 15px 15px 10px 15px;
     flex-shrink: 0;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    z-index: 10;
 }
 
 .test-title {
@@ -845,12 +866,18 @@ body {
     flex-shrink: 0;
 }
 
-.test-content {
+/* ОСНОВНОЙ КОНТЕНТ ДЛЯ СКРОЛЛА */
+.test-scroll-wrapper {
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    margin-bottom: 20px;
-    border-radius: 20px;
+    padding: 0 15px;
+    position: relative;
+}
+
+.test-content {
+    padding-bottom: 20px;
+    min-height: 100%;
 }
 
 .test-card {
@@ -858,11 +885,9 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 20px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    min-height: auto;
-    flex-shrink: 0;
 }
 
 .question-type {
@@ -987,9 +1012,13 @@ body {
     word-break: break-word;
 }
 
+/* КНОПКА НАВИГАЦИИ - ВСЕГДА ВНИЗУ */
 .test-navigation {
-    margin-bottom: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     flex-shrink: 0;
+    z-index: 10;
 }
 
 .next-question-btn {
@@ -1072,30 +1101,34 @@ body {
     .word-translation p {
         font-size: 1.1rem;
     }
-}
-
-@media (max-height: 600px) {
+    
     .test-card {
         padding: 15px;
-        margin-bottom: 15px;
     }
     
-    .question-word {
-        margin-bottom: 15px;
-        padding-bottom: 15px;
+    .question-word h1 {
+        font-size: 1.5rem;
     }
-    
-    .options-container {
-        gap: 8px;
+}
+
+/* Фикс для iOS */
+@supports (-webkit-touch-callout: none) {
+    .test-scroll-wrapper {
+        -webkit-overflow-scrolling: touch;
+        overflow-y: scroll;
     }
-    
-    .option-btn {
-        padding: 14px;
-        font-size: 0.9rem;
-    }
-    
-    .test-feedback {
-        padding: 12px;
-        margin-top: 15px;
-    }
+}
+
+/* Улучшенный скроллбар */
+.test-scroll-wrapper::-webkit-scrollbar {
+    width: 4px;
+}
+
+.test-scroll-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.test-scroll-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(138, 43, 226, 0.3);
+    border-radius: 2px;
 }
