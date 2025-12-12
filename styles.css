@@ -682,7 +682,7 @@ body {
 .navigation-buttons {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 2px;
     margin-top: 5px;
 }
 
@@ -1093,5 +1093,6 @@ body {
         font-size: 1.1rem;
     }
 }
+
 
 
