@@ -7,34 +7,27 @@
     -webkit-touch-callout: none;
 }
 
-/* ФИКС ДЛЯ МОБИЛЬНЫХ: Правильная высота */
-html, body {
-    height: 100%;
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-}
-
 body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     color: white;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    touch-action: pan-y;
+    overflow-x: hidden;
 }
 
 .screen {
     display: none;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .screen.active {
@@ -51,7 +44,7 @@ body {
     padding: 20px;
     text-align: center;
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-    height: 100%;
+    height: 100vh;
 }
 
 .logo {
@@ -163,8 +156,6 @@ body {
     flex-direction: column;
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     padding-bottom: 30px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
 }
 
 .app-header {
@@ -317,8 +308,6 @@ body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
 }
 
 .topics-header {
@@ -327,7 +316,6 @@ body {
     justify-content: space-between;
     margin-bottom: 20px;
     padding-top: 10px;
-    flex-shrink: 0;
 }
 
 .back-btn {
@@ -384,7 +372,6 @@ body {
     gap: 10px;
     margin-bottom: 20px;
     backdrop-filter: blur(10px);
-    flex-shrink: 0;
 }
 
 .search-box i {
@@ -471,8 +458,6 @@ body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
 }
 
 .categories-list {
@@ -542,7 +527,6 @@ body {
 
 .review-section {
     margin-top: 10px;
-    flex-shrink: 0;
 }
 
 .review-all-btn {
@@ -581,8 +565,6 @@ body {
     background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
 }
 
 .words-header {
@@ -590,7 +572,6 @@ body {
     align-items: center;
     margin-bottom: 20px;
     padding-top: 10px;
-    flex-shrink: 0;
 }
 
 .words-title {
@@ -625,7 +606,7 @@ body {
     margin-bottom: 15px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0;
+    flex: 1;
 }
 
 .word-main {
@@ -703,7 +684,6 @@ body {
     flex-direction: column;
     gap: 12px;
     margin-top: 20px;
-    flex-shrink: 0;
 }
 
 .nav-row {
@@ -814,26 +794,21 @@ body {
     background: rgba(33, 150, 243, 0.25);
 }
 
-/* ВАЖНО: Экран тестирования с правильным скроллингом */
+/* Экран тестирования */
 .test-container {
     flex: 1;
+    padding: 15px;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    width: 100%;
-    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-    overflow: hidden;
-    position: relative;
 }
 
 .test-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 15px 10px 15px;
-    flex-shrink: 0;
-    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-    z-index: 10;
+    margin-bottom: 20px;
+    padding-top: 10px;
 }
 
 .test-title {
@@ -866,26 +841,12 @@ body {
     flex-shrink: 0;
 }
 
-/* ОСНОВНОЙ КОНТЕНТ ДЛЯ СКРОЛЛА */
-.test-scroll-wrapper {
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 0 15px;
-    position: relative;
-}
-
-.test-content {
-    padding-bottom: 20px;
-    min-height: 100%;
-}
-
 .test-card {
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 20px;
     padding: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
@@ -974,7 +935,6 @@ body {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     display: none;
-    word-break: break-word;
 }
 
 .feedback-correct {
@@ -1012,13 +972,8 @@ body {
     word-break: break-word;
 }
 
-/* КНОПКА НАВИГАЦИИ - ВСЕГДА ВНИЗУ */
 .test-navigation {
-    padding: 15px;
-    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    flex-shrink: 0;
-    z-index: 10;
+    margin-bottom: 20px;
 }
 
 .next-question-btn {
@@ -1049,6 +1004,42 @@ body {
 .next-question-btn:active:not(:disabled) {
     transform: scale(0.98);
     background: rgba(138, 43, 226, 0.3);
+}
+
+.test-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: auto;
+}
+
+.test-stats .stat-item {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.test-stats .stat-item i {
+    font-size: 1.1rem;
+}
+
+.test-stats .stat-item i.fa-check-circle {
+    color: #4caf50;
+}
+
+.test-stats .stat-item i.fa-times-circle {
+    color: #ff5757;
+}
+
+.test-stats .stat-item span {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 /* Уведомления */
@@ -1101,34 +1092,4 @@ body {
     .word-translation p {
         font-size: 1.1rem;
     }
-    
-    .test-card {
-        padding: 15px;
-    }
-    
-    .question-word h1 {
-        font-size: 1.5rem;
-    }
-}
-
-/* Фикс для iOS */
-@supports (-webkit-touch-callout: none) {
-    .test-scroll-wrapper {
-        -webkit-overflow-scrolling: touch;
-        overflow-y: scroll;
-    }
-}
-
-/* Улучшенный скроллбар */
-.test-scroll-wrapper::-webkit-scrollbar {
-    width: 4px;
-}
-
-.test-scroll-wrapper::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.test-scroll-wrapper::-webkit-scrollbar-thumb {
-    background: rgba(138, 43, 226, 0.3);
-    border-radius: 2px;
 }
