@@ -6,10 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
         tg.setHeaderColor('#0f0c29');
         tg.setBackgroundColor('#0f0c29');
         tg.enableClosingConfirmation(); // Подтверждение закрытия
-        
-        // УБИРАЕМ КНОПКУ MAINBUTTON - вот что нужно удалить/закомментировать
-        // tg.MainButton.setText('Открыть LinguaBot');
-        // tg.MainButton.show();
     }
     
     // Элементы экранов
@@ -43,8 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const nextQuestionBtn = document.getElementById('next-question-btn');
     const currentQuestionElement = document.getElementById('current-question');
     const totalQuestionsElement = document.getElementById('total-questions');
-    const correctAnswersElement = document.getElementById('correct-answers');
-    const wrongAnswersElement = document.getElementById('wrong-answers');
     
     // Список тем
     const topicsList = document.getElementById('topics-list');
@@ -398,10 +392,6 @@ document.addEventListener('DOMContentLoaded', function() {
         wrongAnswersCount = 0;
         selectedAnswer = null;
         
-        // Обновляем отображение статистики
-        correctAnswersElement.textContent = '0';
-        wrongAnswersElement.textContent = '0';
-        
         // Обновляем информацию о тесте
         totalQuestionsElement.textContent = testQuestions.length;
         currentQuestionElement.textContent = '1';
@@ -478,13 +468,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.classList.add('wrong');
             }
         });
-
+        
         // Показываем обратную связь
         testFeedbackElement.style.display = 'block';
         
         if (selected === correct) {
             correctAnswersCount++;
-            correctAnswersElement.textContent = correctAnswersCount;
             
             testFeedbackElement.innerHTML = `
                 <div class="feedback-correct">
@@ -500,7 +489,6 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         } else {
             wrongAnswersCount++;
-            wrongAnswersElement.textContent = wrongAnswersCount;
             
             testFeedbackElement.innerHTML = `
                 <div class="feedback-wrong">
@@ -519,7 +507,6 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         }
         
-        
         // Активируем кнопку следующего вопроса
         nextQuestionBtn.disabled = false;
     }
@@ -533,30 +520,25 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Функция показа результатов теста
     function showTestResults() {
-        // Скрываем элементы теста
-        testWordElement.textContent = '';
-        testTranscriptionElement.textContent = '';
-        optionsContainer.innerHTML = '';
-        testFeedbackElement.style.display = 'none';
-        nextQuestionBtn.style.display = 'none';
-        
-        // Показываем результаты
         const score = Math.round((correctAnswersCount / testQuestions.length) * 100);
         
+        // Скрываем элементы теста
         testWordElement.textContent = 'Результаты теста';
         testWordElement.style.fontSize = '1.5rem';
         testTranscriptionElement.textContent = `Вы ответили правильно на ${score}% вопросов`;
-        
+        optionsContainer.innerHTML = '';
         testFeedbackElement.style.display = 'block';
+        nextQuestionBtn.style.display = 'none';
+        
+        // Показываем результаты
         testFeedbackElement.innerHTML = `
-            <div class="feedback-correct" style="justify-content: center;">
-                <i class="fas fa-trophy"></i>
-                <span>Правильных ответов: ${correctAnswersCount}/${testQuestions.length}</span>
-            </div>
-            <div style="text-align: center; margin-top: 15px;">
+            <div style="text-align: center;">
                 <div style="font-size: 2.5rem; color: #8A2BE2; margin-bottom: 8px;">${score}%</div>
                 <div style="color: #D8BFD8; margin-bottom: 15px; font-size: 0.9rem;">
                     ${getResultMessage(score)}
+                </div>
+                <div style="color: #D8BFD8; margin-bottom: 20px; font-size: 0.85rem;">
+                    Правильных ответов: ${correctAnswersCount} из ${testQuestions.length}
                 </div>
                 <button class="option-btn" id="restart-test-btn" style="background: rgba(138, 43, 226, 0.2);">
                     <i class="fas fa-redo"></i>
@@ -631,13 +613,4 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('touchstart', function(e) {
         touchStartY = e.touches[0].clientY;
     }, { passive: true });
-    
-    // УБИРАЕМ КНОПКУ TELEGRAM - вот что нужно удалить/закомментировать
-    // Инициализация Telegram кнопки
-    // if (tg && tg.MainButton) {
-    //     tg.MainButton.setText('Открыть LinguaBot');
-    //     tg.MainButton.show();
-    // }
 });
-
-
