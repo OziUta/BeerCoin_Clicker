@@ -1006,42 +1006,6 @@ body {
     background: rgba(138, 43, 226, 0.3);
 }
 
-.test-stats {
-    display: flex;
-    gap: 12px;
-    margin-top: auto;
-}
-
-.test-stats .stat-item {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    padding: 12px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    backdrop-filter: blur(10px);
-}
-
-.test-stats .stat-item i {
-    font-size: 1.1rem;
-}
-
-.test-stats .stat-item i.fa-check-circle {
-    color: #4caf50;
-}
-
-.test-stats .stat-item i.fa-times-circle {
-    color: #ff5757;
-}
-
-.test-stats .stat-item span {
-    color: white;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
 /* Уведомления */
 .notification {
     position: fixed;
@@ -1093,3 +1057,4 @@ body {
         font-size: 1.1rem;
     }
 }
+
