@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
         tg.setHeaderColor('#0f0c29');
         tg.setBackgroundColor('#0f0c29');
         tg.enableClosingConfirmation(); // Подтверждение закрытия
+        
+        // УБИРАЕМ КНОПКУ MAINBUTTON - вот что нужно удалить/закомментировать
+        // tg.MainButton.setText('Открыть LinguaBot');
+        // tg.MainButton.show();
     }
     
     // Элементы экранов
@@ -627,9 +631,10 @@ document.addEventListener('DOMContentLoaded', function() {
         touchStartY = e.touches[0].clientY;
     }, { passive: true });
     
+    // УБИРАЕМ КНОПКУ TELEGRAM - вот что нужно удалить/закомментировать
     // Инициализация Telegram кнопки
-    if (tg && tg.MainButton) {
-        tg.MainButton.setText('Открыть LinguaBot');
-        tg.MainButton.show();
-    }
+    // if (tg && tg.MainButton) {
+    //     tg.MainButton.setText('Открыть LinguaBot');
+    //     tg.MainButton.show();
+    // }
 });
