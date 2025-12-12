@@ -438,6 +438,12 @@ document.addEventListener('DOMContentLoaded', function() {
         testFeedbackElement.innerHTML = '';
         nextQuestionBtn.disabled = true;
         
+        // Прокручиваем контент вверх
+        const testContent = document.querySelector('.test-content');
+        if (testContent) {
+            testContent.scrollTop = 0;
+        }
+        
         // Добавляем варианты ответов
         question.options.forEach((option, index) => {
             const optionBtn = document.createElement('button');
@@ -509,6 +515,14 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Активируем кнопку следующего вопроса
         nextQuestionBtn.disabled = false;
+        
+        // Прокручиваем к кнопке следующего вопроса
+        setTimeout(() => {
+            nextQuestionBtn.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        }, 300);
     }
     
     // Обработчик кнопки следующего вопроса
@@ -529,6 +543,12 @@ document.addEventListener('DOMContentLoaded', function() {
         optionsContainer.innerHTML = '';
         testFeedbackElement.style.display = 'block';
         nextQuestionBtn.style.display = 'none';
+        
+        // Прокручиваем контент вверх
+        const testContent = document.querySelector('.test-content');
+        if (testContent) {
+            testContent.scrollTop = 0;
+        }
         
         // Показываем результаты
         testFeedbackElement.innerHTML = `
