@@ -196,8 +196,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Показываем нужный экран
         screenToShow.classList.add('active');
         
-        // Прокручиваем наверх
-        screenToShow.scrollTop = 0;
+        // Сбрасываем скролл на экране тестирования
+        if (screenToShow.id === 'test-screen') {
+            setTimeout(() => {
+                const scrollWrapper = document.querySelector('.test-scroll-wrapper');
+                if (scrollWrapper) {
+                    scrollWrapper.scrollTop = 0;
+                }
+            }, 50);
+        }
     }
     
     // Функция рендеринга списка тем
@@ -438,10 +445,10 @@ document.addEventListener('DOMContentLoaded', function() {
         testFeedbackElement.innerHTML = '';
         nextQuestionBtn.disabled = true;
         
-        // Прокручиваем контент вверх
-        const testContent = document.querySelector('.test-content');
-        if (testContent) {
-            testContent.scrollTop = 0;
+        // Сбрасываем скролл
+        const scrollWrapper = document.querySelector('.test-scroll-wrapper');
+        if (scrollWrapper) {
+            scrollWrapper.scrollTop = 0;
         }
         
         // Добавляем варианты ответов
@@ -518,9 +525,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Прокручиваем к кнопке следующего вопроса
         setTimeout(() => {
+            const scrollWrapper = document.querySelector('.test-scroll-wrapper');
+            if (scrollWrapper) {
+                // Прокручиваем до конца
+                scrollWrapper.scrollTop = scrollWrapper.scrollHeight;
+            }
+            
+            // Альтернативный способ для надежности
             nextQuestionBtn.scrollIntoView({ 
                 behavior: 'smooth', 
-                block: 'center' 
+                block: 'center'
             });
         }, 300);
     }
@@ -544,10 +558,10 @@ document.addEventListener('DOMContentLoaded', function() {
         testFeedbackElement.style.display = 'block';
         nextQuestionBtn.style.display = 'none';
         
-        // Прокручиваем контент вверх
-        const testContent = document.querySelector('.test-content');
-        if (testContent) {
-            testContent.scrollTop = 0;
+        // Сбрасываем скролл
+        const scrollWrapper = document.querySelector('.test-scroll-wrapper');
+        if (scrollWrapper) {
+            scrollWrapper.scrollTop = 0;
         }
         
         // Показываем результаты
@@ -621,16 +635,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // Инициализация начальной статистики
     updateLearnedWordsCount();
     
+    // Фикс для мобильных устройств
+    function fixMobileScrolling() {
+        // Проверяем, мобильное ли устройство
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            // Устанавливаем правильную высоту
+            document.documentElement.style.height = '100%';
+            document.body.style.height = '100%';
+            
+            // Фикс для iOS
+            if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                // Добавляем класс для iOS
+                document.body.classList.add('ios-device');
+            }
+        }
+    }
+    
+    // Вызываем фикс при загрузке
+    setTimeout(fixMobileScrolling, 100);
+    
     // Предотвращение масштабирования на мобильных устройствах
     document.addEventListener('touchmove', function(e) {
         if (e.scale !== 1) {
             e.preventDefault();
         }
     }, { passive: false });
-    
-    // Улучшение для мобильного скролла
-    let touchStartY = 0;
-    document.addEventListener('touchstart', function(e) {
-        touchStartY = e.touches[0].clientY;
-    }, { passive: true });
 });
