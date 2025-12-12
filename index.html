@@ -2,8 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <!-- ВАЖНО: Правильный viewport для мобильных -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LinguaBot - Learn English</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -244,7 +243,7 @@
         </div>
     </div>
     
-    <!-- ВАЖНО: Экран тестирования с правильной структурой для скроллинга -->
+    <!-- Экран тестирования (повторения) -->
     <div id="test-screen" class="screen">
         <div class="test-container">
             <header class="test-header">
@@ -260,36 +259,41 @@
                 </div>
             </header>
             
-            <!-- ОСНОВНОЙ СКРОЛЛИНГ -->
-            <div class="test-scroll-wrapper">
-                <div class="test-content">
-                    <div class="test-card">
-                        <div class="question-type">
-                            <span id="question-type">Выберите правильный перевод</span>
-                        </div>
-                        
-                        <div class="question-word">
-                            <h1 id="test-word">trip</h1>
-                            <div class="word-transcription" id="test-transcription">/trɪp/</div>
-                        </div>
-                        
-                        <div class="options-container" id="options-container">
-                            <!-- Варианты ответов будут добавлены через JavaScript -->
-                        </div>
-                        
-                        <div class="test-feedback" id="test-feedback">
-                            <!-- Обратная связь будет показана после ответа -->
-                        </div>
-                    </div>
+            <div class="test-card">
+                <div class="question-type">
+                    <span id="question-type">Выберите правильный перевод</span>
+                </div>
+                
+                <div class="question-word">
+                    <h1 id="test-word">trip</h1>
+                    <div class="word-transcription" id="test-transcription">/trɪp/</div>
+                </div>
+                
+                <div class="options-container" id="options-container">
+                    <!-- Варианты ответов будут добавлены через JavaScript -->
+                </div>
+                
+                <div class="test-feedback" id="test-feedback">
+                    <!-- Обратная связь будет показана после ответа -->
                 </div>
             </div>
             
-            <!-- Кнопка всегда внизу -->
             <div class="test-navigation">
                 <button class="next-question-btn" id="next-question-btn" disabled>
                     <span>Следующий вопрос</span>
                     <i class="fas fa-arrow-right"></i>
                 </button>
+            </div>
+            
+            <div class="test-stats">
+                <div class="stat-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Правильно: <span id="correct-answers">0</span></span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-times-circle"></i>
+                    <span>Неправильно: <span id="wrong-answers">0</span></span>
+                </div>
             </div>
         </div>
     </div>
